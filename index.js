@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 
 app.use(
   cors({
-    origin: ["https://blog-app-frontend-snowy.vercel.app"],
+    origin: ["http://localhost:5173","https://blog-app-frontend-snowy.vercel.app"],
     methods: ["POST", "GET", "DELETE", "PUT", "PATCH"],
     credentials: true,
   })
