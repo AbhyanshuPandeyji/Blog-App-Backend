@@ -32,8 +32,13 @@ const APP_URL =
 
 const database = async () => {
   // await mongoose.connect(process.env.APP_URL);
-  await mongoose.connect(APP_URL);
-  console.log("Connected to MongoDB");
+  try {
+    await mongoose.connect(APP_URL);
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.log("there is an error in connection to the database " , error)
+  }
+
 };
 
 export default database;
