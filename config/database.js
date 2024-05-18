@@ -8,11 +8,11 @@ import dotenv from "dotenv";
 const APP_URL =
   // "mongodb+srv://abhyanshupandeyji:Abhy%401234@blog.vucqwyx.mongodb.net/?retryWrites=true&w=majority&appName=Blog";
   // use this method of url password encoding
-  // `mongodb+srv://abhyanshupandeyji:${encodeURIComponent(
-  //   "Abhy@1234"
-  // )}@blog.vucqwyx.mongodb.net/Blog?retryWrites=true&w=majority&appName=Blog`;
+  `mongodb+srv://abhyanshupandeyji:${encodeURIComponent(
+    "Abhy@1234"
+  )}@blog.vucqwyx.mongodb.net/Blog?retryWrites=true&w=majority&appName=Blog`;
 
-  "mongodb://localhost:27017/Blog"
+  // "mongodb://localhost:27017/Blog"
 // const database = async () =>
 // {
 //     try {
