@@ -18,6 +18,7 @@ export const getUser = async (req, res) => {
 
   res.status(200).json({
     user,
+    message: "Getting All users Data is been successful"
   });
 };
 
@@ -43,9 +44,11 @@ export const getSingleUser = async (req, res) => {
     // console.log(userId)
     res.status(200).json({
       user,
+      message: "Getting a single user is been successful"
     });
   } catch (error) {
     console.log(error);
+
   }
 };
 
