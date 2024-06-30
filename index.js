@@ -11,7 +11,7 @@ import cors from "cors";
 // if dotenv is not in the root folder then need to also mention the folder by dir method
 dotenv.config();
 // console.log("dotenv is beinig used", dotenv.config());
-console.log("process.env.BASE_URL", process.env.BASE_URL);
+// console.log("process.env.BASE_URL", process.env.BASE_URL);
 
 const app = express();
 
