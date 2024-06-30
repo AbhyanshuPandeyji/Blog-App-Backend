@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
-import mongodb from "mongodb";
+import jwt from "jsonwebtoken";
+// import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -39,7 +41,13 @@ const UserSchema = new mongoose.Schema({
   //   type: Date,
   //   default: Date.now,
   // },
-  username: { type: String, required: true, unique: true },
+  username: {
+    type: String,
+    required: [true, "Please Enter Your Name"],
+    maxLength: [30, "Name Cannot Exceed 30 character"],
+    minLength: [4, "Name Should have More Than 4 Character"],
+    unique: true,
+  },
   age: { type: Number },
   occupation: { type: String },
   // resetPasswordToken: String,
@@ -48,28 +56,30 @@ const UserSchema = new mongoose.Schema({
 
 // this line is required to send the user schema model
 
-// UserSchema.pre("save", async function(next){
-//     if(!this.isModified("password")){
-//         next();
-//     }
-//     this.password = await bcrypt.hash(this.password,10);
-// });
+UserSchema.pre("save", async function (next) {
+  // if(!this.isModified("password")){
+  //     next();
+  // }
+  // password gets hashed when saving user it is required
+  this.password = await bcrypt.hash(this.password, 10);
+});
 
 // // JWT Token
 // // to say this user is saved and can access the authorized routes
-// UserSchema.methods.getJWTToken = function(){
-//     return jwt.sign({id:this._id},process.env.JWT_SECRET,{
-//         expiresIn: process.env.JWT_EXPIRE,
-//     });
-// };
+UserSchema.methods.getJWTToken = function () {
+  return jwt.sign(
+    { id: this._id },
+    process.env.JWT_SECRET
+    //   {
+    //   expiresIn: process.env.JWT_EXPIRE,
+    // }
+  );
+};
 
 // // Compare Password
-// UserSchema.methods.comparePassword = async function(password){
-//     // but the password is hashed then how we will compare - by bcrypt - bcrypt.compareSync() function
-//     // this is the user schema or the object we created
-//     // await was missing
-//     return await bcrypt.compare(password,this.password);
-// }
+UserSchema.methods.comparePassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
 
 const User = mongoose.model("User", UserSchema);
 

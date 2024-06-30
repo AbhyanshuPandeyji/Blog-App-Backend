@@ -8,6 +8,11 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
+// if dotenv is not in the root folder then need to also mention the folder by dir method
+dotenv.config();
+// console.log("dotenv is beinig used", dotenv.config());
+console.log("process.env.BASE_URL", process.env.BASE_URL);
+
 const app = express();
 
 const PORT = 8000;
@@ -19,13 +24,17 @@ app.use((req, res, next) => {
 
 app.use(
   cors({
-    origin: ["http://localhost:5173","https://blog-app-frontend-snowy.vercel.app" , "https://blog-app-frontend-sp8b.onrender.com"],
+    origin: [
+      "http://localhost:5173",
+      "https://blog-app-frontend-snowy.vercel.app",
+      "https://blog-app-frontend-sp8b.onrender.com",
+    ],
     methods: ["POST", "GET", "DELETE", "PUT", "PATCH"],
     credentials: true,
   })
 );
 
-cors;
+// cors;
 app.use(express.json());
 // app.use(dotenv);
 app.use(bodyParser.json());
