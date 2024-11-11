@@ -26,8 +26,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://blog-app-frontend-snowy.vercel.app",
-      "https://blog-app-frontend-sp8b.onrender.com",
+      // "https://blog-app-frontend-snowy.vercel.app",
+      // "https://blog-app-frontend-sp8b.onrender.com",
     ],
     methods: ["POST", "GET", "DELETE", "PUT", "PATCH"],
     credentials: true,

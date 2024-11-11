@@ -41,15 +41,15 @@ const UserSchema = new mongoose.Schema({
   //   type: Date,
   //   default: Date.now,
   // },
-  username: {
-    type: String,
-    required: [true, "Please Enter Your Name"],
-    maxLength: [30, "Name Cannot Exceed 30 character"],
-    minLength: [4, "Name Should have More Than 4 Character"],
-    unique: true,
-  },
-  age: { type: Number },
-  occupation: { type: String },
+  // username: {
+  //   type: String,
+  //   required: [true, "Please Enter Your Name"],
+  //   maxLength: [30, "Name Cannot Exceed 30 character"],
+  //   minLength: [4, "Name Should have More Than 4 Character"],
+  //   unique: true,
+  // },
+  // age: { type: Number },
+  // occupation: { type: String },
   // resetPasswordToken: String,
   // resetPasswordExpire: String,
 });
@@ -67,13 +67,16 @@ UserSchema.pre("save", async function (next) {
 // // JWT Token
 // // to say this user is saved and can access the authorized routes
 UserSchema.methods.getJWTToken = function () {
-  return jwt.sign(
-    { id: this._id },
+  console.log(
+    "jwt token is being created for cookies",
+    this._id,
     process.env.JWT_SECRET
-    //   {
-    //   expiresIn: process.env.JWT_EXPIRE,
-    // }
   );
+
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    // expiresIn: process.env.JWT_EXPIRE,
+    expiresIn: "100d",
+  });
 };
 
 // // Compare Password
