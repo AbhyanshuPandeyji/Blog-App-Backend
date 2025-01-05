@@ -14,7 +14,7 @@ const router = express.Router();
 // router.get("/", getUser);
 
 // get All User
-router.get("/getAll", getAllUsers);
+router.get("/getall", getAllUsers);
 
 // login User
 router.post("/login", loginUser);
