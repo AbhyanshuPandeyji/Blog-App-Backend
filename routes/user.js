@@ -2,8 +2,8 @@ import express from "express";
 import {
   createUser,
   // getSingleUser,
-  // updateUser,
-  // deleteUser,
+  updateUser,
+  deleteUser,
   getAllUsers,
   loginUser,
 } from "../controller/userController.js";
@@ -26,9 +26,9 @@ router.post("/login", loginUser);
 router.post("/create", createUser);
 
 // // update user data - still by params id , not the stored id
-// router.put("/updateUser/:id", updateUser);
+router.put("/updateUser/:id", updateUser);
 
 // // delete user , by the params id , not the logged in user id
-// router.delete("/deleteUser/:id", deleteUser);
+router.delete("/deleteUser/:id", deleteUser);
 
 export default router;

@@ -14,23 +14,37 @@ export const getAllUsers = async (req, res) => {
 export const createUser = async (req, res) => {
   console.log("req.body", req.body.userData);
 
-  const { name, email, password } = req.body.userData;
+  const { name, email, password , username } = req.body.userData;
 
-  const existingUser = await User.find({ email: email });
+  // user find one to find a single user otherwise it will try to find the matching value from entire data
+  // and try to return an array which it can never do because it can never find the data of username at the highest level. 
+  const existingUser = await User.findOne({ username: username });
+  // and i cannot search the data that is singly exists and at the same time is in the data base , because to find in a range i can
+  // but as the mongodb doesnt hold it as a sequence i cannot find within a range of data just the type of data
+  // $gt : range
+  // $lt : range
 
-  console.log(
-    "if user already exists then return dont save user",
-    existingUser
-  );
 
-  if (existingUser.length !== 0) {
-    return res.status(400).json({ message: "User already exists" });
+  // if(existingUser){
+  //   return res.status(409).json({message: "User Already exists"})
+  //   // "if user already exists then return dont save user",
+  //   // existingUser
+  // }
+  // ;
+
+
+  console.log("existing user" , existingUser);
+  if (existingUser) {
+    return res.status(409).json({ message: "User already exists" });
   }
+
+  console.log("trying to register the user if it already not exists")
 
   const user = await User.create({
     name: name,
     email: email,
     password: password,
+    username: username,
   });
 
   // res.status(200).json({
@@ -41,6 +55,8 @@ export const createUser = async (req, res) => {
 
   sendToken(user, 200, res, "user has been created");
 };
+
+
 
 export const loginUser = async (req, res, next) => {
   const { email, password } = req.body.userData;
@@ -61,7 +77,7 @@ export const loginUser = async (req, res, next) => {
     return res.status(400).json({ message: "Wrong Email Or Password" });
   }
 
-  sendToken(user, 200, res, "User Has Been Found");
+  sendToken(user, 200, res, "You have successfully logged in");
 };
 
 // export const getUser = async (req, res) => {
@@ -155,38 +171,55 @@ the MongoDB database. */
 // };
 
 // // update user - update user work partially , need a way to update or use the logged in user
-// export const updateUser = async (req, res) => {
-//   try {
-//     const userOriginal = await User.findById(req.params.id);
+export const updateUser = async (req, res) => {
+  try {
+    const userOriginal = await User.findById(req.params.id);
 
-//     const { name, age, occupation } = req.body;
+    const { name, username } = req.body;
 
-//     const updatedUser = await User.updateOne(userOriginal, {
-//       name: name,
-//       age: age,
-//       occupation: occupation,
-//     });
+    // if(name === "" || name.length < 4 ) return console.log("Enter The full name");
+    const updatedData = {}
+    const checkUsername = await User.find({username : username });
 
-//     res.status(200).json({
-//       user: updatedUser,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+    if(name){
+      if(name === "" || name.length < 4 ) {return res.status(400).json({message : "Enter The full name"});}
+      updatedData.name = name;
+    }
 
-// // delete the user - delete user works
-// export const deleteUser = async (req, res) => {
-//   try {
-//     // using params because not using the access token to save the user
-//     const user = await User.findById(req.params.id);
-//     await user.deleteOne();
-//     // res.status(200).json(`user deleted with the id ${deleteUser}`)
-//     // const deleteUser = await User.deleteOne({email})
-//     res.status(200).json({
-//       message: `Your Account Has been deleted`,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+    if(username){
+      if(checkUsername || username === userOriginal.username) {return res.status(400).json({message : "Enter a different username"});}
+      updatedData.username = username;
+
+    }
+
+    // this is what should be done , an object already created to give the data to see which data needs to be changed
+    // regardless how many datas are being given for the updating
+    const updatedUser = await User.updateOne(userOriginal, updatedData , {new: true});
+
+    res.status(200).json({
+      user: updatedUser,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// delete the user - delete user works
+export const deleteUser = async (req, res) => {
+  try {
+    // using params because not using the access token to save the user
+    const user = await User.findById(req.params.id);
+    if(!user){
+      return res.status(404).json({message: "User Doesn't Exists"})
+    }
+
+    await user.deleteOne();
+    // res.status(200).json(`user deleted with the id ${deleteUser}`)
+    // const deleteUser = await User.deleteOne({email})
+    res.status(200).json({
+      message: `Your Account Has been deleted`,
+    });
+  } catch (error) {
+    return res.status(400).json({message: error});
+  }
+};

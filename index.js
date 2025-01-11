@@ -1,6 +1,5 @@
 import express from "express";
 import database from "./config/database.js";
-import userRoute from "./routes/user.js";
 import bodyParser from "body-parser";
 
 // import dotenv from 'dotenv/config';
@@ -9,9 +8,14 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 
 // if dotenv is not in the root folder then need to also mention the folder by dir method
-dotenv.config();
 // console.log("dotenv is beinig used", dotenv.config());
 // console.log("process.env.BASE_URL", process.env.BASE_URL);
+import userRoute from "./routes/user.js";
+import adminRoute from "./routes/admin.js";
+
+
+
+dotenv.config();
 
 const app = express();
 
@@ -40,6 +44,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use("/api/user", userRoute);
+app.use("/api/admin", adminRoute);
 
 database();
 
