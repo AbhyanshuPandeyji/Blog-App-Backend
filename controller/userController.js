@@ -189,7 +189,6 @@ export const updateUser = async (req, res) => {
     if(username){
       if(checkUsername || username === userOriginal.username) {return res.status(400).json({message : "Enter a different username"});}
       updatedData.username = username;
-
     }
 
     // this is what should be done , an object already created to give the data to see which data needs to be changed

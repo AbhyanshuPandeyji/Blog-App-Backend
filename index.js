@@ -12,6 +12,7 @@ import cors from "cors";
 // console.log("process.env.BASE_URL", process.env.BASE_URL);
 import userRoute from "./routes/user.js";
 import adminRoute from "./routes/admin.js";
+import blogRoute from "./routes/blog.js";
 
 
 
@@ -45,6 +46,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
+app.use("/api/blog", blogRoute);
 
 database();
 
