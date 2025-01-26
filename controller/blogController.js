@@ -26,7 +26,7 @@ export const getSingleBlog = async (req, res) => {
 export const createBlog = async (req, res) => {
 
   // its a temporary fix , the real user id will be taken from the user who is logged in for blog creation
-  const {id} = req.params
+  // const {id} = req.params
   const { title, description, author, content } = req.body;
   const blog = await Blog.create({
     title: title,

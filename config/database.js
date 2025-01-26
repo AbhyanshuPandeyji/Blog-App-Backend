@@ -12,17 +12,17 @@ dotenv.config();
 
 
 // MongoDB connection string.
-// const APP_URL =
-//   `mongodb+srv://abhyanshupandeyji:${encodeURIComponent(
-//     "Abhy@1234"
-//   )}@blog.vucqwyx.mongodb.net/Blog?retryWrites=true&w=majority&appName=Blog`;
+const APP_URL =
+  `mongodb+srv://abhyanshupandeyji:${encodeURIComponent(
+    "Abhy@1234"
+  )}@blog.vucqwyx.mongodb.net/Blog?retryWrites=true&w=majority&appName=Blog`;
 
 // Break the connection string into parts and encode the password
-const DB_USERNAME = process.env.DB_USERNAME
-const DB_PASSWORD = process.env.DB_PASSWORD
-const DB_CLUSTER = process.env.DB_CLUSTER
-const DB_NAME = process.env.DB_NAME
-const APP_URL = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_CLUSTER}/${DB_NAME}?retryWrites=true&w=majority&appName=Blog`;
+// const DB_USERNAME = process.env.DB_USERNAME
+// const DB_PASSWORD = process.env.DB_PASSWORD
+// const DB_CLUSTER = process.env.DB_CLUSTER
+// const DB_NAME = process.env.DB_NAME
+// const APP_URL = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_CLUSTER}/${DB_NAME}?retryWrites=true&w=majority&appName=Blog`;
 
 
 const database = async () => {
