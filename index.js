@@ -96,12 +96,12 @@ const app = express();
 const PORT = 8000;
 
 // Serve static files from the React app's build folder
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+// app.use(express.static(path.join(__dirname, 'client', 'build')));
 
-// Catch-all route to serve index.html for any route not matching an API endpoint
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-});
+// // Catch-all route to serve index.html for any route not matching an API endpoint
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+// });
 
 // Configure CORS
 app.use(
