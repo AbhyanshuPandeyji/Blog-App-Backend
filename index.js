@@ -4,6 +4,9 @@ import bodyParser from "body-parser";
 
 // import dotenv from 'dotenv/config';
 import dotenv from "dotenv";
+// import 'dotenv/config'
+
+
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -13,12 +16,15 @@ import cors from "cors";
 import userRoute from "./routes/user.js";
 import adminRoute from "./routes/admin.js";
 import blogRoute from "./routes/blog.js";
-
-
+// import { configDotenv } from "dotenv";
 
 dotenv.config();
 
+
+
+
 const app = express();
+
 
 const PORT = 8000;
 

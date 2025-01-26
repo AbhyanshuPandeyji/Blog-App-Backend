@@ -38,14 +38,14 @@ const UserSchema = new mongoose.Schema({
   //     required: true,
   //   },
   // },
-  // role: {
-  //   type: String,
-  //   default: "user", // till we make him a admin
-  // },
-  // createdAt: {
-  //   type: Date,
-  //   default: Date.now,
-  // },
+  role: {
+    type: String,
+    default: "user", // till we make him a admin
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
   // username: {
   //   type: String,
   //   required: [true, "Please Enter Your Name"],
@@ -72,11 +72,11 @@ UserSchema.pre("save", async function (next) {
 // // JWT Token
 // // to say this user is saved and can access the authorized routes
 UserSchema.methods.getJWTToken = function () {
-  console.log(
-    "jwt token is being created for cookies",
-    this._id,
-    process.env.JWT_SECRET
-  );
+  // console.log(
+  //   "jwt token is being created for cookies",
+  //   this._id,
+  //   process.env.JWT_SECRET
+  // );
 
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     // expiresIn: process.env.JWT_EXPIRE,

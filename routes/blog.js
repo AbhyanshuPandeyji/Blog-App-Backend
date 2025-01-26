@@ -5,7 +5,8 @@ import {
     getSingleBlog,
     createBlog,
     deleteBlog,
-    updateBlog
+    updateBlog,
+    commentBlog,
 } from "../controller/blogController.js";
 
 const router = express.Router();
@@ -24,5 +25,14 @@ router.put("/updateblog/:id", updateBlog);
 
 // delete blog
 router.delete("/deleteblog/:id", deleteBlog);
+
+// comment on a blog
+router.post("/singleblog/:id/comment", commentBlog);
+
+// likes
+// router.post("/singleblog/:id/likes", commentBlog);
+
+// features
+// router.post("/singleblog/:id/feature", commentBlog);
 
 export default router;

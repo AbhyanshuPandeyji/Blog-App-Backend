@@ -24,12 +24,16 @@ export const getSingleBlog = async (req, res) => {
 };
 
 export const createBlog = async (req, res) => {
+
+  // its a temporary fix , the real user id will be taken from the user who is logged in for blog creation
+  const {id} = req.params
   const { title, description, author, content } = req.body;
   const blog = await Blog.create({
     title: title,
     description: description,
     author: author,
-    content: content
+    content: content,
+    // user: id
   });
 
   res.status(200).json({
@@ -110,3 +114,40 @@ export const deleteBlog = async (req, res) => {
   }
 };
 
+export const commentBlog = async (req, res) => {
+
+  // heres the problem to make a comment on a blog , it needs to have an id from the time its being made while the
+  // id in the blog will be the id of the user who is sending it, that can be send in frontend through using the user to send
+  // it to the backend without trying to get it from the frontend. 
+  const {id} = req.params
+  const { text , userId } = req.body;
+  console.log(id, "\n" , userId , "\n" , text)
+
+  const singleBlog = await Blog.findOne({ _id :  id })
+
+  console.log("single blog" , singleBlog);
+
+  if(!singleBlog){
+    return res.status(404).json({message: "Blog Doesn't Exists"})
+  }
+
+  singleBlog.comment.push({
+    userId: userId,
+    text: text,
+  });
+
+  await singleBlog.save();
+
+  // const blog = await Blog.create({
+  //   text: text,
+  //   user: id
+  // });
+
+  // its not going to be created but to added to the already added blog so it will use the prexisting one with push method
+
+  res.status(201).json({
+    success: true,
+    blog: singleBlog,
+    message: `Comment has been added`,
+  });
+};

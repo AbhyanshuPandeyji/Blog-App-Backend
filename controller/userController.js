@@ -18,7 +18,7 @@ export const createUser = async (req, res) => {
 
   // user find one to find a single user otherwise it will try to find the matching value from entire data
   // and try to return an array which it can never do because it can never find the data of username at the highest level. 
-  const existingUser = await User.findOne({ username: username });
+  const existingUser = await User.findOne({ username: username }).select("+password");
   // and i cannot search the data that is singly exists and at the same time is in the data base , because to find in a range i can
   // but as the mongodb doesnt hold it as a sequence i cannot find within a range of data just the type of data
   // $gt : range
@@ -32,13 +32,12 @@ export const createUser = async (req, res) => {
   // }
   // ;
 
-
-  console.log("existing user" , existingUser);
+  // console.log("existing user" , existingUser);
   if (existingUser) {
     return res.status(409).json({ message: "User already exists" });
   }
 
-  console.log("trying to register the user if it already not exists")
+  // console.log("trying to register the user if it already not exists")
 
   const user = await User.create({
     name: name,
@@ -61,17 +60,22 @@ export const createUser = async (req, res) => {
 export const loginUser = async (req, res, next) => {
   const { email, password } = req.body.userData;
 
+  // console.log(email , password)
+
   if (!email || !password) {
     return res.status(400).json({ message: "Please Enter Email and Password" });
   }
 
   const user = await User.findOne({ email: email }).select("+password");
 
+  // console.log("user found or not" , user)
   if (!user) {
     return res.status(400).json({ message: "Wrong Email Or Password" });
   }
 
   const IsPasswordMatch = await user.comparePassword(password);
+  // console.log("password match or not" )
+  // console.log(IsPasswordMatch)
 
   if (!IsPasswordMatch) {
     return res.status(400).json({ message: "Wrong Email Or Password" });
@@ -171,6 +175,8 @@ the MongoDB database. */
 // };
 
 // // update user - update user work partially , need a way to update or use the logged in user
+
+
 export const updateUser = async (req, res) => {
   try {
     const userOriginal = await User.findById(req.params.id);
@@ -199,7 +205,7 @@ export const updateUser = async (req, res) => {
       user: updatedUser,
     });
   } catch (error) {
-    console.log(error);
+    return res.status(400).json({ message: error });
   }
 };
 
