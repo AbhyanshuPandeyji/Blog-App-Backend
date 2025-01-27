@@ -168,12 +168,12 @@ const app = express();
 const PORT = 8000;
 
 // Serve static files from the Vite build output (client/dist)
-app.use(express.static(path.join(__dirname, 'client', 'dist')));
+// app.use(express.static(path.join(__dirname, 'client', 'dist')));
 
-// Catch-all route to serve index.html for any route not matching an API endpoint
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'));
-});
+// // Catch-all route to serve index.html for any route not matching an API endpoint
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'));
+// });
 
 // Configure CORS
 app.use(
