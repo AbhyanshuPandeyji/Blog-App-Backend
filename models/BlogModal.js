@@ -110,8 +110,8 @@ const BlogSchema = new mongoose.Schema({
   title: {
     type: String,
     required: [true, "Please Enter Your Title"],
-    maxLength: [150, "Title Cannot Exceed 150 characters"],
-    minLength: [4, "Title Should have More Than 4 Characters"],
+    // maxLength: [150, "Title Cannot Exceed 150 characters"],
+    // minLength: [4, "Title Should have More Than 4 Characters"],
     trim: true,
     unique: true
   },
@@ -120,17 +120,31 @@ const BlogSchema = new mongoose.Schema({
     required: [true, "Please Enter The Description"],
   },
   author: {
-    type: mongoose.Schema.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: [true]
+    required: [true, "Author is required"], // More descriptive message
+  },
+  authorName: {
+    type : String,
   },
   content: {
     type: String,
     required: [true, "Content is required"]
   },
+  // blogImage: {
+  //   public_id: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   url: {
+  //     type: String,
+  //     required: true,
+  //   },
+  // },
   category: {
     type: String,
-    enum: ["Technology", "Health", "Education", "Entertainment", "Lifestyle", "Other"], // Example categories
+    // enum: ["Technology", "Health", "Education", "Entertainment", "Lifestyle", "Other"], // Example categories
+    enum: ["ALL", "Javascript", "CSS", "HTML", "NODEJS", "MONGODB", "Tailwindcss", "BOOTSTRAP", "PYTHON", "Other"], // Example categories
     default: "Other"
   },
   numOfLikes: {
@@ -172,7 +186,10 @@ const BlogSchema = new mongoose.Schema({
         required: [true],
       }
     }
-  ]
+  ],
+  updated: {
+    type: Boolean,
+  }
 });
 
 const Blog = mongoose.model("Blog", BlogSchema);

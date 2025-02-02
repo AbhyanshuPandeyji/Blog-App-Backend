@@ -7,6 +7,7 @@ import {
     deleteBlog,
     updateBlog,
     commentBlog,
+    // viewsBlog,
 } from "../controller/blogController.js";
 
 const router = express.Router();
@@ -28,6 +29,9 @@ router.delete("/deleteblog/:id", deleteBlog);
 
 // comment on a blog
 router.post("/singleblog/:id/comment", commentBlog);
+
+// Views
+// router.post("/singleblog/:id/views", viewsBlog);
 
 // likes
 // router.post("/singleblog/:id/likes", commentBlog);

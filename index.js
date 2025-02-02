@@ -1,3 +1,4 @@
+/** */
 // import express from "express";
 // import database from "./config/database.js";
 // import bodyParser from "body-parser";
@@ -140,6 +141,7 @@
 //   console.log(`Server is running on http://localhost:${PORT}...`);
 // });
 
+/**/
 
 
 // this is for vite app
@@ -156,6 +158,7 @@ import cors from "cors";
 import userRoute from "./routes/user.js";
 import adminRoute from "./routes/admin.js";
 import blogRoute from "./routes/blog.js";
+import multer from "multer";
 
 // Initialize dotenv configuration
 dotenv.config();
@@ -198,6 +201,18 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+// const storage = multer.diskStorage({ // Or multer.memoryStorage() for in-memory storage
+//   destination: function (req, file, cb) {
+//     cb(null, 'uploads/') // Directory to store uploaded files
+//   },
+//   filename: function (req, file, cb) {
+//     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+//     cb(null, file.fieldname + '-' + uniqueSuffix + '.' + file.originalname.split('.').pop()) // Unique filenames
+//   }
+// })
+
+// const upload = multer({ storage: storage }); // Create a multer instance
 
 // Route definitions
 app.use("/api/user", userRoute);

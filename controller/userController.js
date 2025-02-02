@@ -14,7 +14,7 @@ export const getAllUsers = async (req, res) => {
 export const createUser = async (req, res) => {
   console.log("req.body", req.body.userData);
 
-  const { name, email, password , username } = req.body.userData;
+  const { name, email, password, username } = req.body.userData;
 
   // user find one to find a single user otherwise it will try to find the matching value from entire data
   // and try to return an array which it can never do because it can never find the data of username at the highest level. 
@@ -185,24 +185,32 @@ export const updateUser = async (req, res) => {
 
     // if(name === "" || name.length < 4 ) return console.log("Enter The full name");
     const updatedData = {}
-    const checkUsername = await User.find({username : username });
+    const checkUsername = await User.find({ username: username });
 
-    if(name){
-      if(name === "" || name.length < 4 ) {return res.status(400).json({message : "Enter The full name"});}
+    if (name) {
+      if (name === "" || name.length < 4) { return res.status(400).json({ message: "Enter The full name" }); }
       updatedData.name = name;
     }
 
-    if(username){
-      if(checkUsername || username === userOriginal.username) {return res.status(400).json({message : "Enter a different username"});}
+    if (username) {
+      if (checkUsername || username === userOriginal.username) { return res.status(400).json({ message: "Enter a different username" }); }
       updatedData.username = username;
     }
 
     // this is what should be done , an object already created to give the data to see which data needs to be changed
     // regardless how many datas are being given for the updating
-    const updatedUser = await User.updateOne(userOriginal, updatedData , {new: true});
+    const updatedUser = await User.updateOne(userOriginal, updatedData, { new: true });
+
+    // Update author names in all blogs by this user
+    await Blog.updateMany(
+      { author: req.params.authorId },
+      { $set: { "authorName": updatedUser.name } } // Assuming you have authorName in Blog schema
+    );
+
 
     res.status(200).json({
       user: updatedUser,
+      message: "user has been updated"
     });
   } catch (error) {
     return res.status(400).json({ message: error });
@@ -214,8 +222,8 @@ export const deleteUser = async (req, res) => {
   try {
     // using params because not using the access token to save the user
     const user = await User.findById(req.params.id);
-    if(!user){
-      return res.status(404).json({message: "User Doesn't Exists"})
+    if (!user) {
+      return res.status(404).json({ message: "User Doesn't Exists" })
     }
 
     await user.deleteOne();
@@ -225,6 +233,6 @@ export const deleteUser = async (req, res) => {
       message: `Your Account Has been deleted`,
     });
   } catch (error) {
-    return res.status(400).json({message: error});
+    return res.status(400).json({ message: error });
   }
 };

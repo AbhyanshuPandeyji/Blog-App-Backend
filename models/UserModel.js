@@ -27,6 +27,7 @@ const UserSchema = new mongoose.Schema({
     minLength: [8, "Password Should be greater Than 8 Characters"],
     select: false,
   },
+  blogs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Blog" }], // Add blogs array
   // not an array because it will be only one image - will be on cloudanary
   // avatar: {
   //   public_id: {
