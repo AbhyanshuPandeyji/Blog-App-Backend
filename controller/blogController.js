@@ -8,7 +8,7 @@ export const getAllBlogs = async (req, res) => {
   res.status(200).json({
     success: true,
     blogs: blogs,
-    message: `All blogs has been`,
+    message: `All blogs has been found`,
   });
 };
 
