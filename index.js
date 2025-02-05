@@ -158,6 +158,7 @@ import cors from "cors";
 import userRoute from "./routes/user.js";
 import adminRoute from "./routes/admin.js";
 import blogRoute from "./routes/blog.js";
+import testRoute from "./test/test.js";
 import multer from "multer";
 
 // Initialize dotenv configuration
@@ -218,6 +219,7 @@ app.use(cookieParser());
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/blog", blogRoute);
+app.use("/api/test", testRoute);
 
 // Connect to the database
 database();

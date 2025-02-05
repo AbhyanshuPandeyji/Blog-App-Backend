@@ -8,14 +8,14 @@ dotenv.config();
 // console.log(process.env)
 
 // local url
-// const APP_URL = "mongodb://localhost:27017/Blog";
+const APP_URL = "mongodb://localhost:27017/Blog";
 
 
 // MongoDB connection string.
-const APP_URL =
-  `mongodb+srv://abhyanshupandeyji:${encodeURIComponent(
-    "Abhy@1234"
-  )}@blog.vucqwyx.mongodb.net/Blog?retryWrites=true&w=majority&appName=Blog`;
+// const APP_URL =
+//   `mongodb+srv://abhyanshupandeyji:${encodeURIComponent(
+//     "Abhy@1234"
+//   )}@blog.vucqwyx.mongodb.net/Blog?retryWrites=true&w=majority&appName=Blog`;
 
 // Break the connection string into parts and encode the password
 // const DB_USERNAME = process.env.DB_USERNAME
@@ -31,7 +31,7 @@ const database = async () => {
     // await mongoose.connect(process.env.BASE_URL);
     await mongoose.connect(APP_URL);
     // await mongoose.connect();
-    console.log("Connected to MongoDB");
+    console.log(`Connected to MongoDB Database ${APP_URL}`);
   } catch (error) {
     console.log("there is an error in connection to the database ", error);
   }
