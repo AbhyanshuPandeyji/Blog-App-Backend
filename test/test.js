@@ -2,13 +2,18 @@ import express from "express";
 import {
     //   updateUser,
     getAllBlogsWithFilters,
+    getToken
     // viewsBlog,
 } from "./testController.js";
 
 const router = express.Router();
 
 // get All blogs
-router.get("/", getAllBlogsWithFilters);
+// router.get("/", getAllBlogsWithFilters);
+
+// Token check
+router.get("/token", getToken);
+
 
 // // Get a single blog
 // router.get("/singleblog/:id", getSingleBlog);

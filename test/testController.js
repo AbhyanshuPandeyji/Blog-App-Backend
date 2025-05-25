@@ -1,4 +1,5 @@
 import Blog from "../models/BlogModal.js";
+import User from "../models/UserModel.js";
 
 export const getAllBlogsWithFilters = async (req, res, next) => {
 
@@ -54,8 +55,8 @@ export const getAllBlogsWithFilters = async (req, res, next) => {
         // const skip = (page - 1) * limit;
         const blogs = await Blog.find(query)
             .sort(sort || { createdAt: -1 }) // Sort by createdAt (newest first) by default
-            // .skip(skip)
-            // .limit(parseInt(limit));
+        // .skip(skip)
+        // .limit(parseInt(limit));
 
         // const totalCount = await Blog.countDocuments(query);
 
@@ -74,5 +75,34 @@ export const getAllBlogsWithFilters = async (req, res, next) => {
         });
     } catch (error) {
         res.status(500).json({ success: false, message: "Failed to create blog" }); // Send error response
+    }
+}
+
+export const getToken = async (req, res, next) => {
+    try {
+        const { token } = req.cookies;
+
+        console.log(token)
+
+        if (!token) {
+            // return next(new ErrorHandler("Please Login to access this resource", 401));
+            return res.status(401).json({ message : "Please Login to access this resource"});
+        }
+
+        // first we need the data of the user for the verification 
+        // when we created jwt token we assigned the id which was mongodb _id so we just accessing that id here
+        // const decodedData = jwt.verify(token, process.env.JWT_SECRET);
+        const decodedData = jwt.verify(token, `SECRECT`);
+
+        // once we got the decoded data and 
+        // till he is login we can access user data
+        // req.user = await User.findById(decodedData.id);
+        const user = await User.findById(decodedData.id);
+        console.log(user);
+
+        res.status(200).json({message:"token has been found" , user: user});
+
+    } catch (error) {
+        console.log(error)
     }
 }

@@ -125,7 +125,7 @@ const BlogSchema = new mongoose.Schema({
     required: [true, "Author is required"], // More descriptive message
   },
   authorName: {
-    type : String,
+    type: String,
   },
   content: {
     type: String,
@@ -147,10 +147,10 @@ const BlogSchema = new mongoose.Schema({
     enum: ["ALL", "Javascript", "CSS", "HTML", "NODEJS", "MONGODB", "Tailwindcss", "BOOTSTRAP", "PYTHON", "Other"], // Example categories
     default: "Other"
   },
-  numOfLikes: {
-    type: Number,
-    default: 0
-  },
+  // numOfLikes: {
+  //   type: Number,
+  //   default: 0
+  // },
   numOfSaves: {
     type: Number,
     default: 0
@@ -174,22 +174,65 @@ const BlogSchema = new mongoose.Schema({
   // userId: {
   // a
   // },
-  comment: [
+  likes: [
     {
-      userId: {
+      user: {
         type: mongoose.Schema.ObjectId,
         ref: "User",
-        required: [true],
+        required: true,
+      },
+    },
+  ],
+  totalLikes: {  // New field for the like count
+    type: Number,
+    default: 0,
+  },
+  // ratings: [
+  //   {
+  //     user: {
+  //       type: mongoose.Schema.ObjectId,
+  //       ref: "User",
+  //       required: true,
+  //     },
+  //     rating: {
+  //       type: Number,
+  //       required: true,
+  //       min: 1,
+  //       max: 5,
+  //     },
+  //   },
+  // ],
+  // totalRatings: { // New field for the rating count
+  //   type: Number,
+  //   default: 0,
+  // },
+  // averageRating: { // New field for the average rating
+  //   type: Number,
+  //   default: 0,
+  // },
+  comments: [
+    {
+      user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        required: true,
       },
       text: {
         type: String,
-        required: [true],
-      }
-    }
+        required: true,
+      },
+      // rating: {
+      //   type: Number,
+      //   min: 1,
+      //   max: 5,
+      // },
+      createdAt: { type: Date, default: Date.now },
+    },
   ],
-  updated: {
-    type: Boolean,
-  }
+  totalComments: { // New field for the comment count
+    type: Number,
+    default: 0,
+  },
 });
 
 const Blog = mongoose.model("Blog", BlogSchema);

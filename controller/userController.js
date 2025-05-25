@@ -236,3 +236,22 @@ export const deleteUser = async (req, res) => {
     return res.status(400).json({ message: error });
   }
 };
+
+
+export const logoutUser = async (req, res, next) => {
+  try {
+    res.cookie("token", null, {
+      // to expire the cookie right away
+      expires: new Date(Date.now()),
+      httpOnly: true,
+    })
+
+    res.status(200).json({
+      success: true,
+      message: `Logged Out Successfully`,
+    });
+
+  } catch (error) {
+    res.status(404).json({message: "Unexpected Error"})
+  }
+}
