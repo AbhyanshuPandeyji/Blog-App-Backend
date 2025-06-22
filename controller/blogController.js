@@ -5,6 +5,8 @@ import User from "../models/UserModel.js";
 export const getAllBlogs = async (req, res) => {
   const blogs = await Blog.find();
 
+  // blogs.reverse();
+
   res.status(200).json({
     success: true,
     blogs: blogs,
