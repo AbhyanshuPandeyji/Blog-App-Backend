@@ -124,9 +124,9 @@ const BlogSchema = new mongoose.Schema({
     ref: "User",
     required: [true, "Author is required"], // More descriptive message
   },
-  authorName: {
-    type : String,
-  },
+  // authorName: {
+  //   type : String,
+  // },
   content: {
     type: String,
     required: [true, "Content is required"]

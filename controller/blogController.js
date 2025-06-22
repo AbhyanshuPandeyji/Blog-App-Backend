@@ -36,23 +36,23 @@ export const createBlog = async (req, res) => {
   try {
     const { title, description, author, content } = req.body;
 
-    const user = await User.findById({ _id: author });
+    // const user = await User.findById({ _id: author });
 
-    const userName = user.username;
+    // const userName = user.username;
 
     const blog = await Blog.create({
       title: title,
       description: description,
       author: author,
       content: content,
-      authorName: userName,
+      // authorName: userName,
       // user: id
       // blogImage: 
     });
 
-    await User.findByIdAndUpdate(author, {
-      $push: { blogs: blog._id }, // Add the new blog's ID to the user's blogs array
-    });
+    // await User.findByIdAndUpdate(author, {
+    //   $push: { blogs: blog._id }, // Add the new blog's ID to the user's blogs array
+    // });
 
     // console.log("blog in the backend", blog)
 

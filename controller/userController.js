@@ -202,15 +202,16 @@ export const updateUser = async (req, res) => {
     const updatedUser = await User.updateOne(userOriginal, updatedData, { new: true });
 
     // Update author names in all blogs by this user
-    await Blog.updateMany(
-      { author: req.params.authorId },
-      { $set: { "authorName": updatedUser.name } } // Assuming you have authorName in Blog schema
-    );
+    // await Blog.updateMany(
+    //   { author: req.params.authorId },
+    //   // { $set: { "authorName": updatedUser.name } } // Assuming you have authorName in Blog schema
+    // );
 
 
     res.status(200).json({
       user: updatedUser,
-      message: "user has been updated"
+      message: "user has been updated",
+      success: true,
     });
   } catch (error) {
     return res.status(400).json({ message: error });
@@ -231,6 +232,7 @@ export const deleteUser = async (req, res) => {
     // const deleteUser = await User.deleteOne({email})
     res.status(200).json({
       message: `Your Account Has been deleted`,
+      success: true,
     });
   } catch (error) {
     return res.status(400).json({ message: error });
